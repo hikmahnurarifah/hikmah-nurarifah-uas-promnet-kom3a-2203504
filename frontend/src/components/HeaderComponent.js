@@ -18,7 +18,7 @@ class HeaderComponent extends Component {
                         <div>
                             <a href="/users"
                                 className="navbar-brand">
-                                    User Management App
+                                    Web Pasien Puskesmas
                             </a></div>
                     </nav>
                 </header>
