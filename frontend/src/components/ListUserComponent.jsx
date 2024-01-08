@@ -1,57 +1,72 @@
-import React, { Component, useEffect } from 'react';
-import UserService from '../services/UserService';
-import { useNavigate } from 'react-router-dom';
+import React, { Component } from 'react'
+import UserService from '../services/UserService'
 
 class ListUserComponent extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props)
 
-    this.state = {
-      users: [],
-    };
+        this.state = {
+            users: [],
+            showDeleteConfirmation: false,
+            userIdToDelete: null,
+        }
+        this.addUser = this.addUser.bind(this);
+        this.editUser = this.editUser.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
+        this.confirmDeleteUser = this.confirmDeleteUser.bind(this);
+        this.cancelDeleteUser = this.cancelDeleteUser.bind(this);
+    }
 
-    this.addUser = this.addUser.bind(this);
-    this.editUser = this.editUser.bind(this);
-    this.deleteUser = this.deleteUser.bind(this);
-
-    // Initialize navigate function from props
-    this.navigate = props.navigate;
-  }
-
-  deleteUser(id) {
-    UserService.deleteUser(id).then((res) => {
-      this.setState({
-        users: this.state.users.filter((user) => user.id !== id),
-      });
-    });
-  }
-
-  viewUser(id) {
-    this.navigate(`/view-user/${id}`);
-  }
-
-  editUser(id) {
-    this.navigate(`/add-user/${id}`);
-  }
-
-  componentDidMount() {
-    UserService.getUsers().then((res) => {
-      if (res.data == null) {
-        this.navigate('/add-user/_add');
+    deleteUser(id) {
+        this.setState({
+          showDeleteConfirmation: true,
+          userIdToDelete: id,
+        });
       }
-      this.setState({ users: res.data });
-    });
-  }
+    
+      confirmDeleteUser() {
+        UserService.deleteUser(this.state.userIdToDelete).then((res) => {
+          this.setState({
+            users: this.state.users.filter((user) => user.id !== this.state.userIdToDelete),
+            showDeleteConfirmation: false,
+            userIdToDelete: null,
+          });
+        });
+      }
+    
+      cancelDeleteUser() {
+        this.setState({
+          showDeleteConfirmation: false,
+          userIdToDelete: null,
+        });
+      }
+      
+    viewUser(id){
+        this.props.history.push(`/view-user/${id}`);
+    }
+    editUser(id){
+        this.props.history.push(`/add-user/${id}`);
+    }
 
-  addUser() {
-    this.navigate('/add-user/_add');
-  }
+    componentDidMount(){
+        UserService.getUsers().then((res) => {
+            if(res.data==null)
+            {
+                this.props.history.push('/add-user/_add');
+            }
+            this.setState({ users: res.data});
+        });
+    }
+
+    addUser(){
+        this.props.history.push('/add-user/_add');
+    }
 
     render() {
         return (
             <div>
                  <h2 className="text-center">
-                     Users List</h2>
+                     List Pasien</h2>
                  <div className = "row">
                     <button className="btn btn-primary"
                      onClick={this.addUser}> Add User</button>
@@ -63,12 +78,11 @@ class ListUserComponent extends Component {
 
                             <thead>
                                 <tr>
-                                    <th>NIM</th>
                                     <th>Nama</th>
-                                    <th>Tanggal Lahir</th>
-                                    <th>Alamat</th>
+                                    <th>Usia</th>
                                     <th>Jenis Kelamin</th>
-                                    <th>Kelas</th>
+                                    <th>Alamat</th>
+                                    <th>Deskripsi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,22 +91,19 @@ class ListUserComponent extends Component {
                                         user => 
                                         <tr key = {user.id}>
                                             <td>
-                                                {user.nim}
-                                            </td>
-                                            <td>
                                                 {user.nama}
                                             </td>
                                             <td>
-                                                {user.tgl_lahir}
-                                            </td>
-                                            <td>
-                                                {user.alamat}
+                                                {user.usia}
                                             </td>
                                             <td>
                                                 {user.jenis_kelamin}
                                             </td>
                                             <td>
-                                                {user.kelas}
+                                                {user.alamat}
+                                            </td>
+                                            <td>
+                                                {user.deskripsi}
                                             </td>
                                              <td>
                       <button onClick={ () => 
@@ -114,17 +125,9 @@ class ListUserComponent extends Component {
                             </tbody>
                         </table>
                  </div>
-            </div>
+        </div>
         )
     }
 }
 
-
-const ListUserWithNavigate = (props) => {
-    const navigate = useNavigate();
-  
-    // Wrap the class component with a functional component to pass navigate as a prop
-    return <ListUserComponent {...props} navigate={navigate} />;
-  };
-  
-  export default ListUserWithNavigate;
+export default ListUserComponent
