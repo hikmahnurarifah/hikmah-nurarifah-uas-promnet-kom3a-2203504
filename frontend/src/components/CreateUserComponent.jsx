@@ -16,40 +16,39 @@ class CreateUserComponent extends Component {
     };
 
     this.changeNama = this.changeNama.bind(this);
-    this.changeNim = this.changeNim.bind(this);
-    this.changeTglLahir = this.changeTglLahir.bind(this);
-    this.changeAlamat = this.changeAlamat.bind(this);
+    this.changeUsia = this.changeUsia.bind(this);
     this.changeJenisKelamin = this.changeJenisKelamin.bind(this);
-    this.changeKelas = this.changeKelas.bind(this);
+    this.changeAlamat = this.changeAlamat.bind(this);
+    this.changeDeskripsi = this.changeDeskripsi.bind(this);
     this.saveOrUpdateUser = this.saveOrUpdateUser.bind(this);
   }
 
   // step 3
   componentDidMount() {
-  if (this.state.id !== "_add") {
-    UserService.getUserById(this.state.id).then((res) => {
-      let user = res.data;
-      this.setState({
-        nim: user.nim,
-        nama: user.nama,
-        tgl_lahir: user.tgl_lahir,
-        alamat: user.alamat,
-        jenis_kelamin: user.jenis_kelamin,
-        kelas: user.kelas,
+    // step 4
+    if (this.state.id === "_add") {
+      return;
+    } else {
+      UserService.getUserById(this.state.id).then((res) => {
+        let user = res.data;
+        this.setState({
+            nama: user.nama,
+            usia: user.usia,
+            jenis_kelamin: user.jenis_kelamin,
+            alamat: user.alamat,
+            deskripsi: user.deskripsi,
+        });
       });
-    });
+    }
   }
-}
-
   saveOrUpdateUser = (e) => {
     e.preventDefault();
     let user = {
-        nim: this.state.nim,
         nama: this.state.nama,
-        tgl_lahir: this.state.tgl_lahir,
-        alamat: this.state.alamat,
+        usia: this.state.usia,
         jenis_kelamin: this.state.jenis_kelamin,
-        kelas: this.state.kelas,
+        alamat: this.state.alamat,
+        deskripsi: this.state.deskripsi,
     };
     console.log("user => " + JSON.stringify(user));
 
@@ -69,16 +68,8 @@ class CreateUserComponent extends Component {
     this.setState({ nama: event.target.value });
   };
 
-  changeNim = (event) => {
-    this.setState({ nim: event.target.value });
-  };
-
-  changeTglLahir = (event) => {
-    this.setState({ tgl_lahir: event.target.value });
-  };
-
-  changeAlamat = (event) => {
-    this.setState({ alamat: event.target.value });
+  changeUsia = (event) => {
+    this.setState({ usia: event.target.value });
   };
 
   changeJenisKelamin = (event) => {
@@ -86,8 +77,12 @@ class CreateUserComponent extends Component {
     this.setState({ jenis_kelamin: event.target.value });
   };
 
-  changeKelas = (event) => {
-    this.setState({ kelas: event.target.value });
+  changeAlamat = (event) => {
+    this.setState({ alamat: event.target.value });
+  };
+
+  changeDeskripsi = (event) => {
+    this.setState({ deskripsi: event.target.value });
   };
 
   cancel() {
@@ -96,9 +91,9 @@ class CreateUserComponent extends Component {
 
   getTitle() {
     if (this.state.id === "_add") {
-      return <h3 className="text-center">Add Mahasiswa</h3>;
+      return <h3 className="text-center">Add Pasien</h3>;
     } else {
-      return <h3 className="text-center">Update User</h3>;
+      return <h3 className="text-center">Update Pasien</h3>;
     }
   }
   render() {
@@ -112,16 +107,6 @@ class CreateUserComponent extends Component {
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <label> Nim: </label>
-                    <input
-                      placeholder="Nim"
-                      name="nim"
-                      className="form-control"
-                      value={this.state.nim}
-                      onChange={this.changeNim}
-                    />
-                  </div>
-                  <div className="form-group">
                     <label> Nama: </label>
                     <input
                       placeholder="Nama"
@@ -132,24 +117,13 @@ class CreateUserComponent extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label> Tanggal Lahir: </label>
+                    <label> Usia: </label>
                     <input
-                      type="date"
-                      placeholder="Tanggal Lahir"
-                      name="tgl_lahir"
+                      placeholder="Usia"
+                      name="usia"
                       className="form-control"
-                    value={this.state.tgl_lahir}
-                      onChange={this.changeTglLahir}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label> Alamat: </label>
-                    <input
-                      placeholder="Alamat"
-                      name="alamat"
-                      className="form-control"
-                      value={this.state.alamat}
-                      onChange={this.changeAlamat}
+                      value={this.state.usia}
+                      onChange={this.changeUsia}
                     />
                   </div>
                   <div className="form-group">
@@ -165,13 +139,23 @@ class CreateUserComponent extends Component {
                     </select>
                   </div>
                   <div className="form-group">
-                    <label> Kelas: </label>
+                    <label> Alamat: </label>
                     <input
-                      placeholder="Kelas"
-                      name="kelas"
+                      placeholder="Alamat"
+                      name="alamat"
                       className="form-control"
-                      value={this.state.kelas}
-                      onChange={this.changeKelas}
+                      value={this.state.alamat}
+                      onChange={this.changeAlamat}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label> Deskripsi: </label>
+                    <input
+                      placeholder="Deskripsi"
+                      name="deskripsi"
+                      className="form-control"
+                      value={this.state.deskripsi}
+                      onChange={this.changeDeskripsi}
                     />
                   </div>
 
