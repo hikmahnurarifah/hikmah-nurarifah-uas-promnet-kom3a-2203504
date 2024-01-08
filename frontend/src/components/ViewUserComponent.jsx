@@ -5,11 +5,9 @@ class ViewUserComponent extends Component {
   constructor(props) {
     super(props);
 
-    // Extract id from props.match.params if defined, otherwise set a default value (e.g., null)
     this.state = {
-      id: props.match?.params?.id || null,
+      id: this.props.match.params.id,
       user: {},
-      loading: true, // Add a loading state
     };
   }
 
@@ -27,28 +25,24 @@ class ViewUserComponent extends Component {
           <h3 className="text-center">View User Details</h3>
           <div className="card-body">
             <div className="row">
-              <label> NIM: </label>
-              <div> {this.state.user.nim}</div>
-            </div>
-            <div className="row">
               <label> Nama: </label>
               <div> {this.state.user.nama}</div>
             </div>
             <div className="row">
-              <label> Tanggal Lahir: </label>
-              <div> {this.state.user.tgl_lahir}</div>
+              <label> Usia: </label>
+              <div> {this.state.user.usia}</div>
+            </div>
+            <div className="row">
+              <label> Jenis Kelamin : </label>
+              <div> {this.state.user.jenis_kelamin}</div>
             </div>
             <div className="row">
               <label> Alamat: </label>
               <div> {this.state.user.alamat}</div>
             </div>
             <div className="row">
-              <label> Jenis Kelamin: </label>
-              <div> {this.state.user.jenis_kelamin}</div>
-            </div>
-            <div className="row">
-              <label> Kelas: </label>
-              <div> {this.state.user.kelas}</div>
+              <label> Deskripsi: </label>
+              <div> {this.state.user.deskripsi}</div>
             </div>
           </div>
         </div>
