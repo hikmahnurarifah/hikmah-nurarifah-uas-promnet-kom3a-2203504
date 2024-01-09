@@ -22,27 +22,37 @@ class ViewUserComponent extends Component {
       <div>
         <br></br>
         <div className="card col-md-6 offset-md-3">
-          <h3 className="text-center">View User Details</h3>
+          <h3 className="text-center">Detail Pasien</h3>
           <div className="card-body">
             <div className="row">
               <label> Nama: </label>
-              <div> {this.state.user.nama}</div>
+              <div style={{ marginLeft: '10px' }}>
+                {this.state.user.nama}
+              </div>
             </div>
             <div className="row">
               <label> Usia: </label>
-              <div> {this.state.user.usia}</div>
+              <div style={{ marginLeft: '10px' }}>
+                {this.state.user.usia}
+              </div>
             </div>
             <div className="row">
-              <label> Jenis Kelamin : </label>
-              <div> {this.state.user.jenis_kelamin}</div>
+              <label> Jenis Kelamin: </label>
+              <div style={{ marginLeft: '10px' }}>
+                {this.state.user.jenis_kelamin}
+              </div>
             </div>
             <div className="row">
               <label> Alamat: </label>
-              <div> {this.state.user.alamat}</div>
+              <div style={{ marginLeft: '10px' }}>
+                {this.state.user.alamat}
+              </div>
             </div>
             <div className="row">
               <label> Deskripsi: </label>
-              <div> {this.state.user.deskripsi}</div>
+              <div style={{ marginLeft: '10px' }}>
+                {this.state.user.deskripsi}
+              </div>
             </div>
           </div>
         </div>

@@ -18,7 +18,7 @@ class HeaderComponent extends Component {
                         <div>
                             <a href="/users"
                                 className="navbar-brand">
-                                    Web Pasien Puskesmas
+                                    NextGen Healthcare
                             </a></div>
                     </nav>
                 </header>

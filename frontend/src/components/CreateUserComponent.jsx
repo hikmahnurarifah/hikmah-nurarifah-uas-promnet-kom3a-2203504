@@ -4,17 +4,15 @@ import UserService from "../services/UserService";
 class CreateUserComponent extends Component {
   constructor(props) {
     super(props);
-  
-    this.state = {
-      id: props.match ? props.match.params.id : "_add",
-      nim: "",
-      nama: "",
-      tgl_lahir: "",
-      alamat: "",
-      jenis_kelamin: "",
-      kelas: "",
-    };
 
+    this.state = {
+      // step 2
+      id: this.props.match.params.id,
+      usia: "",
+      jenis_kelamin: "",
+      alamat: "",
+      deskripsi: "",
+    };
     this.changeNama = this.changeNama.bind(this);
     this.changeUsia = this.changeUsia.bind(this);
     this.changeJenisKelamin = this.changeJenisKelamin.bind(this);
@@ -44,11 +42,11 @@ class CreateUserComponent extends Component {
   saveOrUpdateUser = (e) => {
     e.preventDefault();
     let user = {
-        nama: this.state.nama,
-        usia: this.state.usia,
-        jenis_kelamin: this.state.jenis_kelamin,
-        alamat: this.state.alamat,
-        deskripsi: this.state.deskripsi,
+      nama: this.state.nama,
+      usia: this.state.usia,
+      jenis_kelamin: this.state.jenis_kelamin,
+      alamat: this.state.alamat,
+      deskripsi: this.state.deskripsi,
     };
     console.log("user => " + JSON.stringify(user));
 
@@ -91,9 +89,9 @@ class CreateUserComponent extends Component {
 
   getTitle() {
     if (this.state.id === "_add") {
-      return <h3 className="text-center">Add Pasien</h3>;
+      return <h3 className="text-center">Data Pasien</h3>;
     } else {
-      return <h3 className="text-center">Update Pasien</h3>;
+      return <h3 className="text-center">Ubah Data Pasien </h3>;
     }
   }
   render() {
@@ -119,10 +117,11 @@ class CreateUserComponent extends Component {
                   <div className="form-group">
                     <label> Usia: </label>
                     <input
+                      type="number"
                       placeholder="Usia"
                       name="usia"
                       className="form-control"
-                      value={this.state.usia}
+                    value={this.state.usia}
                       onChange={this.changeUsia}
                     />
                   </div>
